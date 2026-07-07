@@ -1,0 +1,22 @@
+# Secrets / env
+.env
+.env.*
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+# Virtual environments
+.venv/
+venv/
+venv_agent/
+# Databases / local persisted data
+*.db
+data/
+vector_store/
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+# Cache
+*.log

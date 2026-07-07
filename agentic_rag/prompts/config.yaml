@@ -1,0 +1,113 @@
+
+models:
+  llm:
+    provider: "groq"
+    model_name: "llama-3.1-8b-instant"
+    temperature: 0.0
+    max_completion_tokens: 2048
+
+  embedding:
+    provider: "gemini"
+    model_name: "models/gemini-embedding-001"
+    dimensions: 768
+
+data:
+  raw_docs_dir: "D:/NEW_downloads/for_vs_coding/Agentic_RAG_1/agentic_rag/data"
+
+retrieval:
+  chunk_size: 1000
+  chunk_overlap: 200
+
+  vector_store:
+    type: "faiss"
+    index_path: "vector_store/faiss_index"
+    embedding:
+      provider: "gemini"
+      model: "models/gemini-embedding-001"
+  k: 8
+  score_threshold: 0.7
+  rerank_top_k: 5
+
+  hyde:
+    enabled: true
+    model: "llama-3.1-8b-instant"
+    temperature: 0.7
+    max_tokens: 512
+    max_retries: 2
+    retry_delay: 1.0
+
+  web_search:
+    engine: "tavily"
+    k: 3
+    timeout: 10.0
+    max_retries: 2
+    retry_delay: 1.0
+    safe_search: true
+    tavily_search_depth: "basic"
+
+  reranker:
+    backend: "cohere"
+    model: "rerank-v3.5"
+    top_k: 5
+    score_threshold: 0.65
+
+sql:
+  db_uri: "sqlite:///data/database.db"
+  llm_provider: "huggingface"
+  llm_model: "Qwen/Qwen2.5-Coder-32B-Instruct"
+  llm_temperature: 0.0
+  max_rows: 50
+  max_retries: 1
+  retry_delay: 0.5
+  include_tables: []
+  sample_rows_in_prompt: 3
+
+query:
+  analyzer:
+    decompose: true
+    max_subqueries: 4
+
+  transform:
+    step_back: true
+    rewrite: true
+
+grading:
+  relevance:
+    threshold: 0.65
+
+  hallucination:
+    threshold: 0.8
+
+  answer:
+    max_iterations: 3
+
+memory:
+  checkpointer:
+    type: "sqlite"
+    db_path: "D:/NEW_downloads/for_vs_coding/Agentic_RAG_1/agentic_rag/data/database.db"
+
+  memory:
+  long_term:
+    enabled: true
+    summary_frequency: 5
+    summary_model: "llama-3.1-8b-instant"     # or any OpenRouter model
+    summary_temperature: 0.3
+    summary_max_tokens: 512
+    
+    llm_kwargs:
+      openai_api_base: "https://openrouter.ai/api/v1"
+      # openai_api_key: "sk-or-..."     # ← Not recommended (don't hardcode)
+
+ingestion:
+  chunk_size: 1000
+  chunk_overlap: 200
+  separators: ["\n\n", "\n", ".", "!", "?"]
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: true
+
+logging:
+  level: "INFO"
+  file: "logs/agentic_rag.log"
