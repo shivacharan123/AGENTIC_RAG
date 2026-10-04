@@ -5,7 +5,6 @@ A production-style **Agentic Retrieval-Augmented Generation** system built with 
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![LangGraph](https://img.shields.io/badge/orchestration-LangGraph-orange)
 ![FastAPI](https://img.shields.io/badge/api-FastAPI-009688)
-![License](https://img.shields.io/badge/license-MIT-green)
 
 ---
 
@@ -404,9 +403,6 @@ Contributions are welcome! Fork the repo, create a feature branch, and open a pu
 
 ---
 
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for details.
 
 ---
 
